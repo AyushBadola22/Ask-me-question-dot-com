@@ -29,18 +29,16 @@ export async function POST(request:Request) {
                 message : "Account verified successfully"
             })
         }
-        else {
-            if(!isCodeNotExpired)
+        else if(!isCodeNotExpired)
                 return Response.json ({
                 success : false , 
                 message : "Your code has expired, get a new one"
                 })
-            else 
-                return Response.json ({
-                    success : false , 
-                    message : "Incorrect verification code"
-                })
-        }
+        else 
+            return Response.json ({
+                success : false , 
+                message : "Incorrect verification code"
+            })
         
     } catch (error) {
         console.error("Error while verifying code", error);
