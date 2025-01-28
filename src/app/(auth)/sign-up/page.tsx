@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
-const page = () => {
+const Page = () => {
     const [username , setUsername] = useState('');
     const [usernameMessage , setUsernameMessage] = useState('');
     const [isCheckingUsername , setIsCheckingUsername] = useState(false);
@@ -81,13 +81,13 @@ const page = () => {
             } else throw new Error(response.data.message); 
 
             setIsSubmitting(false); 
-        } catch (error) {
-          const axiosError = error as AxiosError<ApiResponse>; 
+        } catch (error : unknown) {
+            const axiosError = error as AxiosError<ApiResponse>; 
             setUsernameMessage(axiosError.response?.data.message ?? 'Error checking username, make sure you only enter letters and characters');
             console.error("error in signup user", error); 
             toast({
                 title : 'Error', 
-                description : 'An error occurred', 
+                description : axiosError.response?.data.message ?? 'Error signing up user', 
                 variant : "destructive"
             })
             setIsSubmitting(false);
@@ -193,4 +193,4 @@ const page = () => {
     )
 }
 
-export default page;
+export default Page;

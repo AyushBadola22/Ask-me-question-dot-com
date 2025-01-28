@@ -4,18 +4,17 @@ import bcrypt from  "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import UserModel, { User } from "@/model/User";
 
-
-
 export const authOptions : NextAuthOptions = {
     providers: [
         CredentialsProvider({
             id : "credentials" , 
-            name : "credentials", 
+            name : "Credentials", 
             credentials : {
-                email : {label : "Email", type : "text"}, 
+                identifier : {label : "Email or Username", type : "text"}, 
                 password : { label : "Password", type : "password"} , 
             }, 
-            async authorize(credentials : any) : Promise<any>{
+            async authorize(credentials?: Record<"identifier" | "password", string> | undefined) : Promise<User | null>{
+                if(!credentials) return null;
                 await dbConnect(); 
                 try {
                     const user = await UserModel.findOne({
@@ -42,8 +41,11 @@ export const authOptions : NextAuthOptions = {
                     else {
                         throw new Error("Incorrect password")
                     }
-                } catch (error : any) {
-                    throw new Error(error)
+                } catch (error) {
+                    const typedError = error as Error & {message : string};
+                    if(typedError.message){
+                        throw new Error(typedError.message)
+                    } else throw new Error("An error occured while trying to login");
                 }
             } ,
         }) ,
