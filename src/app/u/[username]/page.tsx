@@ -19,9 +19,6 @@ import { Loader2 } from 'lucide-react'
 
 const defaultQuestions = "What's a skill you'd love to learn, and why?||If you could travel anywhere in the world right now, where would you go and what would you do?||What's a piece of advice you wish you'd received earlier in life?\n"
 
-
-
-
 export default function PublicPage() {
 
   const [isAcceptingMessages, setIsAcceptingMessages] = useState(false);
@@ -87,7 +84,7 @@ export default function PublicPage() {
         
       }
       fetchAcceptMessages(); 
-    }, [] )
+    }, [params.username] )
 
 
 
@@ -102,11 +99,11 @@ export default function PublicPage() {
         })
       }
       else{
-        console.log("error  aa gya mamu")
+        console.log("error aa gya mamu")
       }
       console.log(suggestedQuestions);
     } catch (error) {
-      const axiosError = error as AxiosError<any>;
+      const axiosError = error as AxiosError<ApiResponse>;
       setSuggestedQuestions(defaultQuestions);  
       toast({
         title : "Error occured", 

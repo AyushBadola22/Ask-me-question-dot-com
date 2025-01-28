@@ -1,5 +1,5 @@
 declare module '*.json' {
-    const value: any;
+    const value: number | string | boolean | object ;
     export default value;
   }
   
