@@ -30,7 +30,7 @@ export async function POST (request : Request) {
 
         const verifyCode = Math.floor(100000 + Math.random() * 800000).toString(); 
 
-
+        console.log('sending request')
 
         if(existingUserByEmail){
             if(existingUserByEmail.isVerified){
@@ -65,7 +65,7 @@ export async function POST (request : Request) {
 
 
         const response = await sendverificationEmail(email , username, verifyCode);
-        
+        console.log('verification code function called')
         
         if(!response.success){
             Response.json({
@@ -73,6 +73,7 @@ export async function POST (request : Request) {
                 message : response.message
             }, {status : 500}) ;
         }
+        console.log('verification code sent')
 
         return Response.json({
             success : true , 

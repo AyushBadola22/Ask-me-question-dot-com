@@ -1,6 +1,4 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { NextResponse } from "next/server";
-
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API ?? "");
 
 export const runtime = "edge";
@@ -9,7 +7,7 @@ export const runtime = "edge";
 // TODO : I want to change it such that it fetches the messages to users and based on that ask something similar.
 
 
-export async function POST(req: Request) {
+export async function POST() {
   try {
     
     const prompt =
@@ -18,20 +16,21 @@ export async function POST(req: Request) {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const response = await model.generateContent(prompt);
-    return NextResponse.json({
+    return Response.json({
       success: true,
       questions: response.response.text(),
     });
 
-  } catch (error: any) {
-    if (error.name && error.status) {
-      return NextResponse.json(
-        { error: error.name, message: error.message },
-        { status: error.status }
+  } catch (error: unknown) {
+    const typedError = error as Error & {status? : number , name? : string}
+    if (typedError.name && typedError.status) {
+      return Response.json(
+        { error: typedError.name, message: typedError.message },
+        { status: typedError.status }
       );
     } else {
       console.error("An unexpected error occurred:", error);
-      return NextResponse.json(
+      return Response.json(
         { success: false, message: "Internal Server Error" },
         { status: 500 }
       );
