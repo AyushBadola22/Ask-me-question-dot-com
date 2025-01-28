@@ -13,7 +13,7 @@ export const authOptions : NextAuthOptions = {
                 identifier : {label : "Email or Username", type : "text"}, 
                 password : { label : "Password", type : "password"} , 
             }, 
-            async authorize(credentials?: Record<"identifier" | "password", string> | undefined) : Promise<User | null>{
+            async authorize(credentials : any) : Promise<any>{
                 if(!credentials) return null;
                 await dbConnect(); 
                 try {
