@@ -60,7 +60,7 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
 
 
   const shareOnWhatsApp = () => {
-    const statusMessage = 'This is my custom status!';
+    const statusMessage = 'Anonymous user asked : ' + message.content + '\n\n Ask your own question on ' + window.location.protocol + '//' + window.location.host;
     const whatsAppUrl = `https://wa.me/?text=${encodeURIComponent(statusMessage)}`;
     window.open(whatsAppUrl, '_blank');
   };
