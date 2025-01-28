@@ -51,7 +51,7 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
   };
 
   const shareOnTwitter = () => {
-    const tweetContent = `Anonymous user asked : ${message.content}\n\n Ask your own question on ${window.location.protocol}//${window.location.host}`;
+    const tweetContent = `Anonymous user asked : ${message.content}\n\n Let people ask you on ${window.location.protocol}//${window.location.host}`;
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       tweetContent
     )}`;
@@ -60,7 +60,7 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
 
 
   const shareOnWhatsApp = () => {
-    const statusMessage = 'Anonymous user asked : ' + message.content + '\n\n Ask your own question on ' + window.location.protocol + '//' + window.location.host;
+    const statusMessage = 'Anonymous user asked : ' + message.content + '\n\n Let people ask you on ' + window.location.protocol + '//' + window.location.host;
     const whatsAppUrl = `https://wa.me/?text=${encodeURIComponent(statusMessage)}`;
     window.open(whatsAppUrl, '_blank');
   };
