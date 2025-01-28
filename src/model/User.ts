@@ -64,6 +64,7 @@ const UserSchema : Schema<User> = new Schema({
 });
 
 
+export interface UserDocument   extends Document , User{}
 
 const UserModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>('User', UserSchema); 
 export default UserModel; 
